@@ -83,6 +83,47 @@ var promedio = listaPersonas.Average( p => p.Estatura);
 var rick = listaPersonas.Find(p => p.Nombres == "RICARDO");
 var personaMasAlta = listaPersonas.Find(p => p.Estatura == masAlto);
 
+// tarea: agregar 2 personas (hombre y mujer)
+//        encontrar las personas que empiecen con R y J
+//        de la lista de personas que empiezan con R y J encontrar la persona mas joven y mas adulta
+//        IMPRIMIR los datos de estas dos personas (joven y adulto)
+//        localizar a la persona cuya cedula es "128390321" y cambiar sus apellidos por CEVALLOS RODRIGUEZ
+//        cambiar la cedula de la 4ta persona en la lista por el valor 1002149290
+
+var mujer = new Persona { 
+    Nombres = "XIMENA",
+    Apellidos = "BENAVIDES",
+    FechaNacimiento = new DateTime(1990, 3, 17),
+    Estatura = 1.66,
+    NroCedula = "8908908990"
+};
+
+var hombre = new Persona {
+    Nombres = "CALIXTO",
+    Apellidos = "ORELLANA",
+    FechaNacimiento = new DateTime(1988, 2, 27),
+    Estatura = 1.76,
+    NroCedula = "718979312"
+};
+
+listaPersonas.Add(hombre);
+listaPersonas.Add(mujer);
+
+var personasAyC = listaPersonas.Where(p => p.Nombres.StartsWith("R") || p.Nombres.StartsWith("J")).ToList();
+var edadJoven = personasAyC.Max(p => p.FechaNacimiento);
+var edadAdulta = personasAyC.Min( p => p.FechaNacimiento);
+var personaJoven = personasAyC.Find(p => p.FechaNacimiento == edadJoven);
+var personaAdulta = personasAyC.Find(p => p.FechaNacimiento == edadAdulta);
+
+var persona128390321 = listaPersonas.Find(p => p.NroCedula == "128390321");
+persona128390321.Apellidos = "CEVALLOS RODRIGUEZ";
+
+var persona4ta = listaPersonas[3].NroCedula = "1002149290";
+
+Console.WriteLine("--------------------");
+Console.WriteLine("LISTA TOTAL DE PERSONAS");
+Console.WriteLine("--------------------");
+
 foreach (var persona in listaPersonas)
 {
     if (persona != null)
@@ -90,5 +131,29 @@ foreach (var persona in listaPersonas)
         Console.WriteLine(persona.Datos());
     }
 }
+
+Console.WriteLine("--------------------");
+Console.WriteLine("PERSONAS CUYO NOMBRE EMPEIZA CON J y R");
+Console.WriteLine("--------------------");
+
+foreach (var persona in personasAyC)
+{
+    if (persona != null)
+    {
+        Console.WriteLine(persona.Datos());
+    }
+}
+
+Console.WriteLine("--------------------");
+Console.WriteLine("PERSONA MAS JOVEN");
+Console.WriteLine("--------------------");
+Console.WriteLine(personaJoven.Datos());
+
+Console.WriteLine("--------------------");
+Console.WriteLine("PERSONA MAS ADULTA");
+Console.WriteLine("--------------------");
+Console.WriteLine(personaAdulta.Datos());
+Console.WriteLine("--------------------");
+
 
 Console.ReadLine();
